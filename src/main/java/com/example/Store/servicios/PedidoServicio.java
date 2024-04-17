@@ -17,13 +17,31 @@ public class PedidoServicio {
     @Autowired
     PedidoRepositorio pedidoRepositorio;
 
-    public Pedido guardarPedido(){
-        return null;
+    public Pedido guardarPedido(Pedido pedido) throws Exception {
+        try{
+            if(!validacionPedido.validarFechaYHora(pedido.getFechaYHora().toLocalDate())){
+                throw new Exception("Fecha Invalida, por favor verifique");
+            }
+            return pedidoRepositorio.save(pedido);
+
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+
+        }
     }
 
 
-    public Pedido buscarPedidoPorID(){
-        return null;
+
+    public Pedido buscarPedidoPorID(Integer idPedido) throws Exception {
+        try{
+            if (pedidoRepositorio.findById(idPedido).isPresent()){
+                return pedidoRepositorio.findById(idPedido).get();
+            }else {
+                throw new Exception("Marca no encontrado");
+            }
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
     //consultar todos los usuarios

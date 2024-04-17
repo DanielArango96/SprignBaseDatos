@@ -15,13 +15,31 @@ public class TipoPrendaServicio {
 
     @Autowired
     TipoPrendaRepositorio tipoPrendaRepositorio;
-    public TipoPrenda guardarTipoPrenda (){
-        return null;
+    public TipoPrenda guardarTipoPrenda (TipoPrenda tipoPrenda) throws Exception {
+        try {
+            if (!validacionTipoPrenda.validarNombre(tipoPrenda.getNombre())) {
+                throw new Exception("Nombres Invalidos, por favor verifique");
+            }
+            return tipoPrendaRepositorio.save(tipoPrenda);
+
+
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+
+        }
     }
 
 
-    public TipoPrenda  buscarTipoPrendaPorID(){
-        return null;
+    public TipoPrenda  buscarTipoPrendaPorID(Integer idTipoPrenda) throws Exception {
+        try{
+            if (tipoPrendaRepositorio.findById(idTipoPrenda).isPresent()){
+                return tipoPrendaRepositorio.findById(idTipoPrenda).get();
+            }else {
+                throw new Exception("Marca no encontrado");
+            }
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
     }
 
     //consultar todos los usuarios

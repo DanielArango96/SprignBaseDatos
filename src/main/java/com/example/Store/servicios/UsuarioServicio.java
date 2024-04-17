@@ -61,8 +61,12 @@ public class UsuarioServicio {
     }
 
     //consultar todos los usuarios
-    public List<Usuario> buscarTodosLosUsuarios(){
-        return null;
+    public List<Usuario> buscarTodosLosUsuarios() throws Exception{
+       try{
+           return usuarioRepositorio.findAll();
+       } catch (Exception error){
+           throw new Exception(error.getMessage());
+       }
     }
 
     //editar un usuario
